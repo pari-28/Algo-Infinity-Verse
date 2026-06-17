@@ -1,15 +1,28 @@
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loading-screen");
+
+  if (loader) {
+    loader.style.display = "none";
+  }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("Personalized Learning Path JS Loaded");
+
   const generateBtn = document.getElementById("generateBtn");
   const goalSelect = document.getElementById("goalSelect");
   const roadmapContainer = document.getElementById("roadmapContainer");
   const progressText = document.getElementById("progressText");
 
-  if (
-    !generateBtn ||
-    !goalSelect ||
-    !roadmapContainer ||
-    !progressText
-  ) {
+  console.log({
+    generateBtn,
+    goalSelect,
+    roadmapContainer,
+    progressText
+  });
+
+  if (!generateBtn || !goalSelect || !roadmapContainer || !progressText) {
+    console.error("Required elements not found");
     return;
   }
 
@@ -24,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "Dynamic Programming",
       "System Design Basics"
     ],
-
     placement: [
       "Aptitude",
       "OOP",
@@ -34,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "DSA Practice",
       "Mock Interviews"
     ],
-
     faang: [
       "Advanced DSA",
       "Graphs",
@@ -46,9 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   generateBtn.addEventListener("click", () => {
+    console.log("Generate clicked");
+
     const goal = goalSelect.value;
 
-    if (!goal) {
+    if (!goal || !paths[goal]) {
       alert("Please select a learning goal.");
       return;
     }
@@ -71,28 +84,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateProgress();
 
-    document
-      .querySelectorAll(".topic-checkbox")
-      .forEach((checkbox) => {
-        checkbox.addEventListener("change", updateProgress);
-      });
+    document.querySelectorAll(".topic-checkbox").forEach((checkbox) => {
+      checkbox.addEventListener("change", updateProgress);
+    });
   });
 
   function updateProgress() {
-    const checkboxes =
-      document.querySelectorAll(".topic-checkbox");
-
-    const completed =
-      document.querySelectorAll(
-        ".topic-checkbox:checked"
-      ).length;
+    const checkboxes = document.querySelectorAll(".topic-checkbox");
+    const completed = document.querySelectorAll(
+      ".topic-checkbox:checked"
+    ).length;
 
     const total = checkboxes.length;
-
     const percentage =
-      total === 0
-        ? 0
-        : Math.round((completed / total) * 100);
+      total === 0 ? 0 : Math.round((completed / total) * 100);
 
     progressText.textContent =
       `${percentage}% Completed (${completed}/${total})`;
