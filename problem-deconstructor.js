@@ -1,4 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // -----------------------------
+  // LOADING SCREEN FIX (IMPORTANT)
+  // -----------------------------
+  const loader = document.getElementById("loading-screen");
+
+  if (loader) {
+    setTimeout(() => {
+      loader.style.opacity = "0";
+      loader.style.transition = "opacity 0.5s ease";
+
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 500);
+    }, 300);
+  }
+
+  // -----------------------------
+  // ELEMENT REFERENCES
+  // -----------------------------
   const analyzeBtn = document.getElementById("analyzeBtn");
   const problemInput = document.getElementById("problemInput");
 
@@ -7,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const templateType = document.getElementById("templateType");
   const similarProblemsEl = document.getElementById("similarProblems");
 
+  // Safety check
   if (
     !analyzeBtn ||
     !problemInput ||
@@ -18,6 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  // -----------------------------
+  // ANALYZE BUTTON LOGIC
+  // -----------------------------
   analyzeBtn.addEventListener("click", () => {
     const inputText = problemInput.value.trim();
 
@@ -38,11 +61,13 @@ document.addEventListener("DOMContentLoaded", () => {
       subProblems = "Maintain a window and track character frequency";
       template = "Sliding Window Template";
       similar = "Longest Substring Without Repeating Characters";
+
     } else if (text.includes("tree")) {
       pattern = "Tree Traversal";
       subProblems = "Visit nodes and process child relationships";
       template = "DFS/BFS Tree Template";
       similar = "Binary Tree Level Order Traversal";
+
     } else if (text.includes("graph")) {
       pattern = "Graph Algorithms";
       subProblems = "Model the graph and traverse connected nodes";
@@ -50,6 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
       similar = "Number of Islands";
     }
 
+    // -----------------------------
+    // OUTPUT UPDATE
+    // -----------------------------
     patternType.textContent = pattern;
     subProblemsEl.textContent = subProblems;
     templateType.textContent = template;
