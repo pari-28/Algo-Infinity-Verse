@@ -105,8 +105,13 @@ document.addEventListener("DOMContentLoaded", () => {
       targetTopic.value;
 
     if (!source || !target) {
-      alert("Please select both topics.");
+      sharedConcept.setAttribute("role", "status");
+      sharedConcept.setAttribute("aria-live", "polite");
+      sharedConcept.textContent = "Please select both topics.";
+      transferInsight.textContent = "Choose one source and one target topic.";
+      exampleProblems.textContent = "-";
       return;
+    }
     }
 
     const key =
